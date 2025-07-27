@@ -1,0 +1,18 @@
+
+rules_version = '2';
+
+service cloud.firestore {
+  match /databases/{database}/documents {
+    // This rule allows any authenticated user to read and write to the database.
+    // For a production environment, you should restrict write access to your backend services
+    // or specific admin user UIDs to secure your data.
+    // Example for admin-only write access:
+    // match /issues/{issueId} {
+    //   allow read: if request.auth != null;
+    //   allow write: if request.auth.uid == "YOUR_ADMIN_USER_UID";
+    // }
+    match /{document=**} {
+      allow read, write: if request.auth != null;
+    }
+  }
+}
